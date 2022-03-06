@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="aa2e0f5d-d4db-4d5d-a6b0-161b49ba1f6b" activeEnvironment="Default" name="REST Project 1" resourceRoot="" soapui-version="5.6.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:RestService" id="a92985ea-08ad-4622-b17a-f0b70d26c2b5" wadlVersion="http://wadl.dev.java.net/2009/02" name="https://demoqa.com" type="rest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart=""/><con:endpoints><con:endpoint>https://demoqa.com</con:endpoint></con:endpoints><con:resource name="Books" path="/BookStore/v1/Books" id="aab5fd82-48db-446e-b582-5d634f4cb13c"><con:settings/><con:parameters/><con:method name="Books 1" id="0877a715-2ce3-4fcc-8118-ab02c98169e4" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:book="https://demoqa.com/BookStore/v1/Books">book:Response</con:element></con:representation><con:request name="Request 1" id="fc83b9ab-a880-416a-9184-3841653bcb6b" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://demoqa.com</con:endpoint><con:request/><con:originalUri>https://demoqa.com/BookStore/v1/Books</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/><con:parameterOrder/></con:request></con:method></con:resource></con:interface><con:testSuite id="9cf3e038-26e2-44ce-b8b8-8ef12cdbe62c" name="TestSuite 1"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="e60186f7-7de7-4bd6-b566-92ff31f6e9cd" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase 1" searchProperties="true"><con:settings/><con:testStep type="restrequest" name="REST Request" id="3863e691-4fd0-4b0e-b0dd-2bbf4182cf53"><con:settings/><con:config service="https://demoqa.com" methodName="Books 1" resourcePath="/BookStore/v1/Books" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="REST Request" id="dd51973e-7521-412e-99c3-3b9a2a329000" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://demoqa.com</con:endpoint><con:request/><con:originalUri>https://demoqa.com/BookStore/v1/Books</con:originalUri><con:assertion type="JsonPath Count" id="bad2d20e-602e-4fe6-8351-a1b93001602c" name="JsonPath Count"><con:configuration><path>$..books[?(@.pages > 250)]</path><content>6</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="JsonPath Match" id="80e4f66d-26ca-444d-bcec-2592fda0c48e"><con:configuration><path>$..books[-1:].isbn</path><content>[9781593277574]</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="JsonPath Existence Match" id="69bc90f5-d5bd-4a9e-93bf-17281bf865d8" name="JsonPath Existence Match"><con:configuration><path>$..books[-1:].isbn</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="JsonPath RegEx Match" id="1c1c6e44-1ca0-41f4-8c0a-b4fea08b873a" name="JsonPath RegEx Match"><con:configuration><path>$..books[0].website</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments><regEx>^.*http.*$</regEx></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" id="06b49792-843d-4c38-8782-b11c3f3e84c3" name="Script Assertion"><con:configuration><scriptText>import groovy.json.JsonSlurper
+
+
+def ResponseMessage = messageExchange.response.responseContent
+
+def jsonSlurper = new JsonSlurper().parseText(ResponseMessage)
+
+assert jsonSlurper.books[0].publish_date == "2020-06-04T08:48:39.000Z"
+assert jsonSlurper.books[0].publish_date.class == String
+
+assert jsonSlurper.books[1].publish_date ==  "2020-06-04T09:11:40.000Z"
+assert jsonSlurper.books[1].publish_date.class == String
+
+assert jsonSlurper.books[2].publish_date == "2020-06-04T09:12:43.000Z"
+assert jsonSlurper.books[2].publish_date.class == String
+
+assert jsonSlurper.books[3].publish_date ==  "2014-02-01T00:00:00.000Z"
+assert jsonSlurper.books[3].publish_date.class == String
+
+assert jsonSlurper.books[4].publish_date == "2015-12-27T00:00:00.000Z"
+assert jsonSlurper.books[4].publish_date.class == String
+
+assert jsonSlurper.books[5].publish_date ==  "2014-07-01T00:00:00.000Z"
+assert jsonSlurper.books[5].publish_date.class == String
+
+assert jsonSlurper.books[6].publish_date == "2014-12-14T00:00:00.000Z"
+assert jsonSlurper.books[6].publish_date.class == String
+
+assert jsonSlurper.books[7].publish_date == "2016-09-03T00:00:00.000Z"
+assert jsonSlurper.books[7].publish_date.class == String
+
+
+
+ </scriptText></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
